@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import './transaction.dart';
 
 // => curly braces can be replaced with => if only one statement...
@@ -77,7 +78,8 @@ class MyHomePage extends StatelessWidget {
                             color: Colors.black),
                       ),
                       Text(
-                        transaction.date.toString(),
+                       // DateFormat('yyyy-MM-dd').format(transaction.date),
+                        DateFormat.yMMMd().format(transaction.date),
                         style: TextStyle(fontSize: 12, color: Colors.grey),
                       ),
                     ],
