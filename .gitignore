@@ -21,3 +21,5 @@ doc/api/
 *.js.map
 
 .idea/
+
+ios/Flutter/.last_build_id

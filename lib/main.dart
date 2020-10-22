@@ -33,7 +33,7 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter App'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
@@ -42,6 +42,27 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               child: Text('CHART!'),
               elevation: 5,
+            ),
+          ),
+          Card(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextField(
+                    decoration: InputDecoration(labelText: "Title"),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: "Amount"),
+                  ),
+                  FlatButton(
+                    onPressed: () {},
+                    child: Text("Add Transaction"),
+                    textColor: Colors.purple,
+                  )
+                ],
+              ),
             ),
           ),
           Column(
@@ -68,7 +89,8 @@ class MyHomePage extends StatelessWidget {
                           color: Colors.purple),
                     ),
                   ),
-                  Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         transaction.title,
@@ -78,7 +100,7 @@ class MyHomePage extends StatelessWidget {
                             color: Colors.black),
                       ),
                       Text(
-                       // DateFormat('yyyy-MM-dd').format(transaction.date),
+                        // DateFormat('yyyy-MM-dd').format(transaction.date),
                         DateFormat.yMMMd().format(transaction.date),
                         style: TextStyle(fontSize: 12, color: Colors.grey),
                       ),
