@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './themes/AppTheme.dart';
 import './models/transaction.dart';
 
 import './widgets/new_transaction.dart';
@@ -13,10 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter App',
       home: MyHomePage(),
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.amber,
-      ),
+      theme: appTheme
     );
   }
 }
