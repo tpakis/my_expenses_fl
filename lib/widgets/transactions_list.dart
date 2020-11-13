@@ -1,11 +1,14 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 
 class TransactionsList extends StatelessWidget {
   final List<Transaction> _transactions;
+  final Function _deleteTransaction;
 
-  TransactionsList(this._transactions);
+  TransactionsList(this._transactions, this._deleteTransaction);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,15 @@ class TransactionsList extends StatelessWidget {
                       transaction.title,
                       style: Theme.of(context).textTheme.title,
                     ),
-                    subtitle: Text(DateFormat.yMMMd().format(transaction.date)),
+                    subtitle: Text(
+                      DateFormat.yMMMd().format(transaction.date),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        _deleteTransaction(transaction.id);
+                      },
+                    ),
                   ),
                 );
               },
