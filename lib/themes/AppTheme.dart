@@ -14,6 +14,7 @@ final appTheme = ThemeData(
   fontFamily: _defaultFont,
   textTheme: ThemeData.light().textTheme.copyWith(
         title: titleTextStyle,
+        button: TextStyle(color: Colors.white)
       ),
   appBarTheme: AppBarTheme(
     textTheme: ThemeData.light().textTheme.copyWith(
