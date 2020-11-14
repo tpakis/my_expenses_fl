@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_expenses_fl/utils/Utils.dart';
 import 'package:my_expenses_fl/widgets/chart.dart';
 import './themes/AppTheme.dart';
 import './models/transaction.dart';
@@ -70,23 +71,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _appBar = AppBar(
+      title: Text('Flutter App'),
+      actions: [
+        IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              startAddNewTransaction(context);
+            }),
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter App'),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                startAddNewTransaction(context);
-              }),
-        ],
-      ),
+      appBar: _appBar,
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Chart(_recentTransactions),
-          TransactionsList(_transactions, _deleteTransaction),
+          Container(
+            height: availableHeight(context, _appBar) * 0.3,
+            child: Chart(_recentTransactions),
+          ),
+          Container(
+            height: availableHeight(context, _appBar) * 0.7,
+            child: TransactionsList(_transactions, _deleteTransaction),
+          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
