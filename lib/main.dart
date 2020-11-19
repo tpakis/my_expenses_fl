@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:my_expenses_fl/utils/Utils.dart';
 import 'package:my_expenses_fl/widgets/chart.dart';
 import './themes/AppTheme.dart';
@@ -8,7 +9,14 @@ import './widgets/new_transaction.dart';
 import './widgets/transactions_list.dart';
 
 // => curly braces can be replaced with => if only one statement...
-void main() => runApp(MyApp());
+void main() {
+  /*// we need it for some devices to lock orientation to work
+  WidgetsFlutterBinding.ensureInitialized();
+  // lock orientation
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);*/
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
