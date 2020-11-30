@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:my_expenses_fl/utils/Utils.dart';
 import 'package:my_expenses_fl/widgets/chart.dart';
 import './themes/AppTheme.dart';
@@ -41,6 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
         amount: 16.53,
         date: DateTime.now())*/
   ];
+
+  bool _showChart = false;
 
   void _addTransaction(String title, double amount, DateTime date) {
     final transaction = Transaction(
@@ -95,14 +96,28 @@ class _MyHomePageState extends State<MyHomePage> {
         //mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-            height: availableHeight(context, _appBar) * 0.3,
-            child: Chart(_recentTransactions),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Show Chart"),
+              Switch(
+                  value: _showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      _showChart = value;
+                    });
+                  })
+            ],
           ),
-          Container(
-            height: availableHeight(context, _appBar) * 0.7,
-            child: TransactionsList(_transactions, _deleteTransaction),
-          ),
+          _showChart
+              ? Container(
+                  height: availableHeight(context, _appBar) * 0.7,
+                  child: Chart(_recentTransactions),
+                )
+              : Container(
+                  height: availableHeight(context, _appBar) * 0.7,
+                  child: TransactionsList(_transactions, _deleteTransaction),
+                ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
