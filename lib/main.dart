@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
         //mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Row(
+          if (isLandscape(context)) Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("Show Chart"),
@@ -109,7 +109,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   })
             ],
           ),
-          _showChart
+          if (isPortrait(context)) Container(
+            height: availableHeight(context, _appBar) * 0.3,
+            child: Chart(_recentTransactions),
+          ),
+          if (isPortrait(context)) Container(
+            height: availableHeight(context, _appBar) * 0.7,
+            child: TransactionsList(_transactions, _deleteTransaction),
+          ),
+          if (isLandscape(context)) _showChart
               ? Container(
                   height: availableHeight(context, _appBar) * 0.7,
                   child: Chart(_recentTransactions),
