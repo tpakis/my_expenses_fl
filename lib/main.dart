@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_expenses_fl/utils/Utils.dart';
-import 'package:my_expenses_fl/widgets/chart.dart';
+import './extensions/MediaQueryExt.dart';
+import './widgets/chart.dart';
 import './themes/AppTheme.dart';
 import './models/transaction.dart';
 
@@ -80,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData mediaQuery = MediaQuery.of(context);
     final _appBar = AppBar(
       title: Text('Flutter App'),
       actions: [
@@ -96,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
         //mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          if (isLandscape(context)) Row(
+          if (mediaQuery.isLandscape()) Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("Show Chart"),
@@ -109,21 +110,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   })
             ],
           ),
-          if (isPortrait(context)) Container(
-            height: availableHeight(context, _appBar) * 0.3,
+          if (mediaQuery.isPortrait()) Container(
+            height: mediaQuery.availableHeight(_appBar) * 0.3,
             child: Chart(_recentTransactions),
           ),
-          if (isPortrait(context)) Container(
-            height: availableHeight(context, _appBar) * 0.7,
+          if (mediaQuery.isPortrait()) Container(
+            height: mediaQuery.availableHeight(_appBar) * 0.7,
             child: TransactionsList(_transactions, _deleteTransaction),
           ),
-          if (isLandscape(context)) _showChart
+          if (mediaQuery.isLandscape()) _showChart
               ? Container(
-                  height: availableHeight(context, _appBar) * 0.7,
+                  height: mediaQuery.availableHeight(_appBar) * 0.7,
                   child: Chart(_recentTransactions),
                 )
               : Container(
-                  height: availableHeight(context, _appBar) * 0.7,
+                  height: mediaQuery.availableHeight(_appBar) * 0.7,
                   child: TransactionsList(_transactions, _deleteTransaction),
                 ),
         ],
