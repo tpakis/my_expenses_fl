@@ -16,4 +16,5 @@ extension MediaQueryExt on MediaQueryData {
   bool isPortrait() {
     return this.orientation == Orientation.portrait;
   }
+
 }
