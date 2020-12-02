@@ -109,46 +109,48 @@ class _MyHomePageState extends State<MyHomePage> {
                   }),
             ],
           );
-    final _appBody = Column(
-      //mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        if (mediaQuery.isLandscape())
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Show Chart"),
-              Switch.adaptive(
-                  activeColor: Theme.of(context).accentColor,
-                  value: _showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      _showChart = value;
-                    });
-                  })
-            ],
-          ),
-        if (mediaQuery.isPortrait())
-          Container(
-            height: mediaQuery.availableHeight(_appBar) * 0.3,
-            child: Chart(_recentTransactions),
-          ),
-        if (mediaQuery.isPortrait())
-          Container(
-            height: mediaQuery.availableHeight(_appBar) * 0.7,
-            child: TransactionsList(_transactions, _deleteTransaction),
-          ),
-        if (mediaQuery.isLandscape())
-          _showChart
-              ? Container(
-                  height: mediaQuery.availableHeight(_appBar) * 0.7,
-                  child: Chart(_recentTransactions),
-                )
-              : Container(
-                  height: mediaQuery.availableHeight(_appBar) * 0.7,
-                  child: TransactionsList(_transactions, _deleteTransaction),
-                ),
-      ],
+    final _appBody = SafeArea(
+      child: Column(
+        //mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          if (mediaQuery.isLandscape())
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Show Chart"),
+                Switch.adaptive(
+                    activeColor: Theme.of(context).accentColor,
+                    value: _showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        _showChart = value;
+                      });
+                    })
+              ],
+            ),
+          if (mediaQuery.isPortrait())
+            Container(
+              height: mediaQuery.availableHeight(_appBar) * 0.3,
+              child: Chart(_recentTransactions),
+            ),
+          if (mediaQuery.isPortrait())
+            Container(
+              height: mediaQuery.availableHeight(_appBar) * 0.7,
+              child: TransactionsList(_transactions, _deleteTransaction),
+            ),
+          if (mediaQuery.isLandscape())
+            _showChart
+                ? Container(
+                    height: mediaQuery.availableHeight(_appBar) * 0.7,
+                    child: Chart(_recentTransactions),
+                  )
+                : Container(
+                    height: mediaQuery.availableHeight(_appBar) * 0.7,
+                    child: TransactionsList(_transactions, _deleteTransaction),
+                  ),
+        ],
+      ),
     );
     return Platform.isIOS
         ? CupertinoPageScaffold(
