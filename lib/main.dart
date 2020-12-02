@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './extensions/MediaQueryExt.dart';
 import './widgets/chart.dart';
@@ -83,68 +84,90 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final MediaQueryData mediaQuery = MediaQuery.of(context);
-    final _appBar = AppBar(
-      title: Text('Flutter App'),
-      actions: [
-        IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              startAddNewTransaction(context);
-            }),
-      ],
-    );
-    return Scaffold(
-      appBar: _appBar,
-      body: Column(
-        //mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          if (mediaQuery.isLandscape())
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    final PreferredSizeWidget _appBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: Text('Flutter App'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Show Chart"),
-                Switch.adaptive(
-                    activeColor: Theme.of(context).accentColor,
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    })
+                GestureDetector(
+                  onTap: () {
+                    startAddNewTransaction(context);
+                  },
+                  child: Icon(CupertinoIcons.add),
+                )
               ],
             ),
-          if (mediaQuery.isPortrait())
-            Container(
-              height: mediaQuery.availableHeight(_appBar) * 0.3,
-              child: Chart(_recentTransactions),
-            ),
-          if (mediaQuery.isPortrait())
-            Container(
-              height: mediaQuery.availableHeight(_appBar) * 0.7,
-              child: TransactionsList(_transactions, _deleteTransaction),
-            ),
-          if (mediaQuery.isLandscape())
-            _showChart
-                ? Container(
-                    height: mediaQuery.availableHeight(_appBar) * 0.7,
-                    child: Chart(_recentTransactions),
-                  )
-                : Container(
-                    height: mediaQuery.availableHeight(_appBar) * 0.7,
-                    child: TransactionsList(_transactions, _deleteTransaction),
-                  ),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Platform.isIOS
-          ? Container()
-          : FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {
-                startAddNewTransaction(context);
-              },
-            ),
+          )
+        : AppBar(
+            title: Text('Flutter App'),
+            actions: [
+              IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    startAddNewTransaction(context);
+                  }),
+            ],
+          );
+    final _appBody = Column(
+      //mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        if (mediaQuery.isLandscape())
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Show Chart"),
+              Switch.adaptive(
+                  activeColor: Theme.of(context).accentColor,
+                  value: _showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      _showChart = value;
+                    });
+                  })
+            ],
+          ),
+        if (mediaQuery.isPortrait())
+          Container(
+            height: mediaQuery.availableHeight(_appBar) * 0.3,
+            child: Chart(_recentTransactions),
+          ),
+        if (mediaQuery.isPortrait())
+          Container(
+            height: mediaQuery.availableHeight(_appBar) * 0.7,
+            child: TransactionsList(_transactions, _deleteTransaction),
+          ),
+        if (mediaQuery.isLandscape())
+          _showChart
+              ? Container(
+                  height: mediaQuery.availableHeight(_appBar) * 0.7,
+                  child: Chart(_recentTransactions),
+                )
+              : Container(
+                  height: mediaQuery.availableHeight(_appBar) * 0.7,
+                  child: TransactionsList(_transactions, _deleteTransaction),
+                ),
+      ],
     );
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            child: _appBody,
+            navigationBar: _appBar,
+          )
+        : Scaffold(
+            appBar: _appBar,
+            body: _appBody,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () {
+                      startAddNewTransaction(context);
+                    },
+                  ),
+          );
   }
 }

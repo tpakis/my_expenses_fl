@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 extension MediaQueryExt on MediaQueryData {
 
-  double availableHeight(AppBar appBar) {
+  double availableHeight(PreferredSizeWidget appBar) {
     return this.size.height -
         appBar.preferredSize.height -
         this.padding.top;
