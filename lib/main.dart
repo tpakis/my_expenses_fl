@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter App', home: MyHomePage(), theme: appTheme);
+        title: 'Flutter App', home: MyHomePage(), theme: materialAppTheme);
   }
 }
 
@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Show Chart"),
+                Text("Show Chart", style: Theme.of(context).textTheme.title,),
                 Switch.adaptive(
                     activeColor: Theme.of(context).accentColor,
                     value: _showChart,

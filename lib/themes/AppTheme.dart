@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 final appBarTextStyle = TextStyle(
@@ -8,7 +9,7 @@ final titleTextStyle = TextStyle(
 
 const _defaultFont = "Quicksand";
 
-final appTheme = ThemeData(
+final materialAppTheme = ThemeData(
   primarySwatch: Colors.purple,
   accentColor: Colors.amber,
   fontFamily: _defaultFont,
@@ -22,3 +23,4 @@ final appTheme = ThemeData(
         ),
   ),
 );
+
