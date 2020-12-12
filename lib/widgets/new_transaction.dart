@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../widgets/AdaptiveFlatButton.dart';
 
 class NewTransaction extends StatefulWidget {
   Function(String, double, DateTime) addTransactionCallback;
@@ -87,27 +88,7 @@ class _NewTransactionState extends State<NewTransaction> {
                             : "Picked Date ${DateFormat.yMd().format(_selectedDate)}",
                       ),
                     ),
-                    Platform.isIOS
-                    // ios button have opacity instead of ripple effect
-                        ? CupertinoButton(
-                            onPressed: () {
-                              _presentDatePicker();
-                            },
-                            child: Text(
-                              "Choose Date",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          )
-                        : FlatButton(
-                            onPressed: () {
-                              _presentDatePicker();
-                            },
-                            textColor: Theme.of(context).primaryColor,
-                            child: Text(
-                              "Choose Date",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          )
+                    AdaptiveFlatButton("Choose Date", _presentDatePicker)
                   ],
                 ),
               ),
