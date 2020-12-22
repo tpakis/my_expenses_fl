@@ -84,7 +84,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     // idealy we should avoid using mediaquery in main but in specific widgets
-    final MediaQueryData mediaQuery = MediaQuery.of(context);
+    final MediaQueryData _mediaQuery = MediaQuery.of(context);
+    final ThemeData _theme = Theme.of(context);
+
     final PreferredSizeWidget _appBar = Platform.isIOS
         ? CupertinoNavigationBar(
             middle: const Text('Flutter App'),
@@ -115,41 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
         //mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          if (mediaQuery.isLandscape())
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Show Chart", style: Theme.of(context).textTheme.title,),
-                Switch.adaptive(
-                    activeColor: Theme.of(context).accentColor,
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    })
-              ],
-            ),
-          if (mediaQuery.isPortrait())
-            Container(
-              height: mediaQuery.availableHeight(_appBar) * 0.3,
-              child: Chart(_recentTransactions),
-            ),
-          if (mediaQuery.isPortrait())
-            Container(
-              height: mediaQuery.availableHeight(_appBar) * 0.7,
-              child: TransactionsList(_transactions, _deleteTransaction),
-            ),
-          if (mediaQuery.isLandscape())
-            _showChart
-                ? Container(
-                    height: mediaQuery.availableHeight(_appBar) * 0.7,
-                    child: Chart(_recentTransactions),
-                  )
-                : Container(
-                    height: mediaQuery.availableHeight(_appBar) * 0.7,
-                    child: TransactionsList(_transactions, _deleteTransaction),
-                  ),
+          ...(_mediaQuery.isLandscape()
+              ? _buildLandscapeContent(_theme, _mediaQuery, _appBar)
+              : _buildPortraitContent(_mediaQuery, _appBar))
         ],
       ),
     );
@@ -172,5 +142,50 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                   ),
           );
+  }
+
+  List<Widget> _buildPortraitContent(
+      MediaQueryData mediaQuery, AppBar _appBar) {
+    return [
+      Container(
+        height: mediaQuery.availableHeight(_appBar) * 0.3,
+        child: Chart(_recentTransactions),
+      ),
+      Container(
+        height: mediaQuery.availableHeight(_appBar) * 0.7,
+        child: TransactionsList(_transactions, _deleteTransaction),
+      ),
+    ];
+  }
+
+  List<Widget> _buildLandscapeContent(ThemeData theme, MediaQueryData mediaQuery, AppBar _appBar) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Show Chart",
+            style: theme.textTheme.title,
+          ),
+          Switch.adaptive(
+              activeColor: theme.accentColor,
+              value: _showChart,
+              onChanged: (value) {
+                setState(() {
+                  _showChart = value;
+                });
+              })
+        ],
+      ),
+      _showChart
+          ? Container(
+              height: mediaQuery.availableHeight(_appBar) * 0.7,
+              child: Chart(_recentTransactions),
+            )
+          : Container(
+              height: mediaQuery.availableHeight(_appBar) * 0.7,
+              child: TransactionsList(_transactions, _deleteTransaction),
+            )
+    ];
   }
 }
