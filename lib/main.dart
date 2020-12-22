@@ -83,10 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // idealy we should avoid using mediaquery in main but in specific widgets
     final MediaQueryData mediaQuery = MediaQuery.of(context);
     final PreferredSizeWidget _appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text('Flutter App'),
+            middle: const Text('Flutter App'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -94,16 +95,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   onTap: () {
                     startAddNewTransaction(context);
                   },
-                  child: Icon(CupertinoIcons.add),
+                  child: const Icon(CupertinoIcons.add),
                 )
               ],
             ),
           )
         : AppBar(
-            title: Text('Flutter App'),
+            title: const Text('Flutter App'),
             actions: [
               IconButton(
-                  icon: Icon(Icons.add),
+                  icon: const Icon(Icons.add),
                   onPressed: () {
                     startAddNewTransaction(context);
                   }),

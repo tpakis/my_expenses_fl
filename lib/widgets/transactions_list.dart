@@ -6,7 +6,7 @@ class TransactionsList extends StatelessWidget {
   final List<Transaction> _transactions;
   final Function _deleteTransaction;
 
-  TransactionsList(this._transactions, this._deleteTransaction);
+  const TransactionsList(this._transactions, this._deleteTransaction);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class TransactionsList extends StatelessWidget {
                   "No transactions added!",
                   style: Theme.of(context).textTheme.title,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -57,14 +57,14 @@ class TransactionsList extends StatelessWidget {
                   trailing: MediaQuery.of(context).size.width > 460
                       ? FlatButton.icon(
                           textColor: Theme.of(context).errorColor,
-                          icon: Icon(Icons.delete),
-                          label: Text("Delete"),
+                          icon: const Icon(Icons.delete),
+                          label: const Text("Delete"),
                           onPressed: () {
                             _deleteTransaction(transaction.id);
                           },
                         )
                       : IconButton(
-                          icon: Icon(Icons.delete),
+                          icon: const Icon(Icons.delete),
                           color: Theme.of(context).errorColor,
                           onPressed: () {
                             _deleteTransaction(transaction.id);

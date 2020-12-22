@@ -6,7 +6,7 @@ class AdaptiveFlatButton extends StatelessWidget {
   final String _buttonText;
   final Function _onClick;
 
-  AdaptiveFlatButton(this._buttonText, this._onClick);
+  const AdaptiveFlatButton(this._buttonText, this._onClick);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class AdaptiveFlatButton extends StatelessWidget {
             onPressed: _onClick,
             child: Text(
               _buttonText,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           )
         : FlatButton(
@@ -24,7 +24,7 @@ class AdaptiveFlatButton extends StatelessWidget {
             textColor: Theme.of(context).primaryColor,
             child: Text(
               _buttonText,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           );
   }
