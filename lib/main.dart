@@ -83,35 +83,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // idealy we should avoid using mediaquery in main but in specific widgets
+    // ideally we should avoid using mediaquery in main but in specific widgets
     final MediaQueryData _mediaQuery = MediaQuery.of(context);
     final ThemeData _theme = Theme.of(context);
 
     final PreferredSizeWidget _appBar = Platform.isIOS
-        ? CupertinoNavigationBar(
-            middle: const Text('Flutter App'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    startAddNewTransaction(context);
-                  },
-                  child: const Icon(CupertinoIcons.add),
-                )
-              ],
-            ),
-          )
-        : AppBar(
-            title: const Text('Flutter App'),
-            actions: [
-              IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    startAddNewTransaction(context);
-                  }),
-            ],
-          );
+        ? _buildIOSAppBar(context)
+        : _buildMaterialAppBar(context);
+
     final _appBody = SafeArea(
       child: Column(
         //mainAxisAlignment: MainAxisAlignment.start,
@@ -144,8 +123,38 @@ class _MyHomePageState extends State<MyHomePage> {
           );
   }
 
+  AppBar _buildMaterialAppBar(BuildContext context) {
+    return AppBar(
+          title: const Text('Flutter App'),
+          actions: [
+            IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  startAddNewTransaction(context);
+                }),
+          ],
+        );
+  }
+
+  CupertinoNavigationBar _buildIOSAppBar(BuildContext context) {
+    return CupertinoNavigationBar(
+          middle: const Text('Flutter App'),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  startAddNewTransaction(context);
+                },
+                child: const Icon(CupertinoIcons.add),
+              )
+            ],
+          ),
+        );
+  }
+
   List<Widget> _buildPortraitContent(
-      MediaQueryData mediaQuery, AppBar _appBar) {
+      MediaQueryData mediaQuery, PreferredSizeWidget _appBar) {
     return [
       Container(
         height: mediaQuery.availableHeight(_appBar) * 0.3,
@@ -158,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
   }
 
-  List<Widget> _buildLandscapeContent(ThemeData theme, MediaQueryData mediaQuery, AppBar _appBar) {
+  List<Widget> _buildLandscapeContent(ThemeData theme, MediaQueryData mediaQuery, PreferredSizeWidget _appBar) {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
