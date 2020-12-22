@@ -7,10 +7,15 @@ import '../widgets/AdaptiveFlatButton.dart';
 class NewTransaction extends StatefulWidget {
   Function(String, double, DateTime) addTransactionCallback;
 
-  NewTransaction(this.addTransactionCallback);
+  NewTransaction(this.addTransactionCallback) {
+    print("Consrtuctor New transaction widget");
+  }
 
   @override
-  _NewTransactionState createState() => _NewTransactionState();
+  _NewTransactionState createState() {
+    print("createState new transaction widget");
+    return _NewTransactionState();
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
@@ -18,6 +23,33 @@ class _NewTransactionState extends State<NewTransaction> {
 
   final _titleController = TextEditingController();
   DateTime _selectedDate;
+
+  _NewTransactionState() {
+    print("constructor new transaction state");
+  }
+
+  // use it as onStart() to initialize net calls, db calls
+  @override
+  void initState() {
+    print("initState new transaction state");
+    super.initState();
+  }
+
+  // not very useful, maybe refetch some data with new id from new widget?
+  @override
+  void didUpdateWidget(NewTransaction oldWidget) {
+    bool updated =
+        widget != oldWidget; // we have access to the widget from state!
+    print("didUpdateWidget: $updated , new transaction widget");
+    super.didUpdateWidget(oldWidget);
+  }
+
+  // use it as onDestroy() cleanup listeners, observables
+  @override
+  void dispose() {
+    print("dispose() dispose new transaction widget");
+    super.dispose();
+  }
 
   void _submitData() {
     double amount = double.tryParse(_amountController.text);
