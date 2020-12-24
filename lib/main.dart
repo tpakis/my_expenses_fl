@@ -33,7 +33,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _transactions = [
     /* Transaction(
         id: 't1', title: 'New Shoes', amount: 69.99, date: DateTime.now()),
@@ -196,5 +196,24 @@ class _MyHomePageState extends State<MyHomePage> {
               child: TransactionsList(_transactions, _deleteTransaction),
             )
     ];
+  }
+
+  // use it as onStart() to initialize net calls, db calls
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState lifecycleState) {
+    print(lifecycleState);
+  }
+
+  // use it as onDestroy() cleanup listeners, observables
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 }

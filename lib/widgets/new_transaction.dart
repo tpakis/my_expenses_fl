@@ -18,7 +18,7 @@ class NewTransaction extends StatefulWidget {
   }
 }
 
-class _NewTransactionState extends State<NewTransaction> {
+class _NewTransactionState extends State<NewTransaction> with WidgetsBindingObserver {
   final _amountController = TextEditingController();
 
   final _titleController = TextEditingController();
@@ -32,6 +32,7 @@ class _NewTransactionState extends State<NewTransaction> {
   @override
   void initState() {
     print("initState new transaction state");
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
@@ -48,6 +49,7 @@ class _NewTransactionState extends State<NewTransaction> {
   @override
   void dispose() {
     print("dispose() dispose new transaction widget");
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 

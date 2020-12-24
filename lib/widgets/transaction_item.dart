@@ -4,6 +4,8 @@ import '../models/transaction.dart';
 
 class TransactionItem extends StatelessWidget {
   const TransactionItem({
+    // we should pass the id of the item for flutter to match the state (element) to the correct viewholder (widget)
+    // we should use ValueKey(id)
     Key key,
     @required this.transaction,
     @required Function deleteTransaction,
